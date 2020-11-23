@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  trial:
+    image: $REGISTRY_URL/$PROJECT_NAME:trial
+    environment:
+      - "APP_PROJECT=client-server 测试服务端"
+      - "APP_ENV=trial"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+      update_config:
+        parallelism: 2
+        delay: 5s
+        order: start-first
+      placement:
+        constraints: [node.labels.role == client-server]
+    networks:
+      - need-cash-test
+    configs:
+      - source: client-server_trial_v001
+        target: /opt/www/.env
+
+configs:
+  client-server_trial_v001:
+    external: true
+networks:
+  need-cash-test:
+    external: true

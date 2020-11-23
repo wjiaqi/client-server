@@ -1,0 +1,183 @@
+<?php
+
+declare (strict_types=1);
+/**
+ * @copyright 深圳市易果网络科技有限公司
+ * @version   1.0.0
+ * @link      https://dayiguo.com
+ */
+
+namespace App\Common;
+
+use App\Exception\ResponseException;
+
+use GuzzleHttp\Client;
+use Hyperf\AsyncQueue\Driver\DriverInterface;
+use Hyperf\Cache\Listener\DeleteListenerEvent;
+use Hyperf\Di\Annotation\Inject;
+use Hyperf\Logger\LoggerFactory;
+use Hyperf\Redis\Redis;
+use Hyperf\Snowflake\IdGeneratorInterface;
+use Hyperf\Utils\Context;
+use League\Flysystem\Filesystem;
+use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
+
+/**
+ * 基类
+ *
+ * @author  王佳其(991010625@qq.com)
+ * @package App\Common
+ */
+abstract class Base
+{
+
+    /**
+     * @Inject
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * @Inject
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
+     * @Inject()
+     * @var CacheInterface
+     */
+    protected $cache;
+
+    /**
+     * @Inject()
+     * @var Redis
+     */
+    protected $redis;
+
+    /**
+     * @Inject()
+     * @var IdGeneratorInterface
+     */
+    protected $snowflake;
+
+    /**
+     * 错误响应
+     *
+     * @param string $message
+     * @param int    $code
+     *
+     * @throws ResponseException
+     */
+    protected function error(string $message, int $code = 400): void
+    {
+        throw new ResponseException($message, $code);
+    }
+
+    /**
+     * 判断rpc返回是否正常
+     *
+     * @param array $data
+     */
+    protected function checkRpcError(array $data): void
+    {
+        if ($data['code'] === 200) {
+            return;
+        }
+        $this->error('logic.' . $data['message']);
+    }
+
+    /**
+     * 成功响应
+     *
+     * @param array $data
+     *
+     * @throws ResponseException
+     */
+    protected function success(array $data = []): void
+    {
+        Context::set('successful_data', $data);
+
+        throw new ResponseException('success', 200);
+    }
+
+    /**
+     * Guzzle
+     *
+     * @return Client
+     */
+    protected function guzzle(): Client
+    {
+        return $this->container->get(\Hyperf\Guzzle\ClientFactory::class)->create();
+    }
+
+    /**
+     * Redis
+     *
+     * @return Redis
+     */
+    protected function redis(): Redis
+    {
+        return di(Redis::class);
+    }
+
+
+    /**
+     * 缓存
+     *
+     * @return CacheInterface
+     */
+    protected function cache(): CacheInterface
+    {
+        return  $this->container->get(CacheInterface::class);
+    }
+
+    /**
+     * 消息队列投递
+     *
+     * @param string $channel
+     * @return DriverInterface
+     */
+    protected function asyncQueue(string $channel = 'default'): DriverInterface
+    {
+        return $this->container->get(\Hyperf\AsyncQueue\Driver\DriverFactory::class)->get($channel);
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param string $driver
+     * @return Filesystem
+     */
+    protected function upload(string $driver = 'oss'): Filesystem
+    {
+        return $this->container->get(\Hyperf\Filesystem\FilesystemFactory::class)->get($driver);
+    }
+
+    /**
+     * 日志管理
+     *
+     * @param string $name
+     * @param string $channel
+     *
+     * @return LoggerInterface
+     */
+    protected function logger(string $channel, string $name = 'log'): LoggerInterface
+    {
+        return $this->container->get(LoggerFactory::class)->get($name, $channel);
+    }
+
+    /**
+     * 清理缓存
+     *
+     * @param string $listener
+     * @param array  $args
+     */
+    protected function flushCache(string $listener, array $args): void
+    {
+        $this->eventDispatcher->dispatch(new DeleteListenerEvent($listener, $args));
+    }
+}
