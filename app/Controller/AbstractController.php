@@ -25,17 +25,17 @@ abstract class AbstractController extends Base
      * @Inject
      * @var ContainerInterface
      */
-    protected $container;
+    protected ContainerInterface $container;
 
     /**
      * @Inject
      * @var RequestInterface
      */
-    protected $request;
+    protected RequestInterface $request;
 
     /**
      * @Inject
      * @var ResponseInterface
      */
-    protected $response;
+    protected ResponseInterface $response;
 }

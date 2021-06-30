@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 深圳市乐悠悠网络科技有限公司
+ * @copyright 安巽
  * @version   1.0.0
  * @link
  */

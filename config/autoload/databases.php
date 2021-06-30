@@ -37,19 +37,6 @@ $config = [
 ];
 $config['host'] = env('DB_HOST', 'localhost');
 
-//if (env('APP_ENV') === 'dev') {
-//    $config['host'] = env('DB_HOST', 'localhost');
-//}
-//else {
-//    $config['read'] = [
-//        'host' => empty(env('DB_READ_HOST')) ? '' : explode(',', env('DB_READ_HOST'))
-//    ];
-//    $config['write'] = [
-//        'host' => env('DB_WRITE_HOST'),
-//    ];
-//    $config['sticky'] = true;
-//}
-
 
 return [
     'default' => $config

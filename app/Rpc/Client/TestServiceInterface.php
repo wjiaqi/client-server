@@ -1,22 +1,22 @@
 <?php
 /**
- * @copyright 深圳市易果网络科技有限公司
+ * @copyright 安巽
  * @version 1.0.0
- * @link https://dayiguo.com
+ * @link https://www.secxun.com
  */
 
 namespace App\Rpc\Client;
 
 /**
- * 审批服务
+ * 测试服务
  *
- * @author  王佳其(991010625@qq.com)
+ * @author  xiaoqi(991010625@qq.com)
  * @package App\JsonRpc
  */
-interface ApproveServiceInterface
+interface TestServiceInterface
 {
     /**
-     * 风控审批服务
+     * 测试服务
      *
      * @param int $order_id 订单ID
      * @return array
@@ -24,11 +24,11 @@ interface ApproveServiceInterface
     public function riskApprove(int $order_id): array;
 
     /**
-     * 审批结论(该接口会自动写入审批记录，调用时请勿重复插入审批记录; 非审批结论时需要自行创建审批记录)
+     * 结论(该接口会自动写入审批记录)
      *
-     * @param int $task_id 审批任务ID
-     * @param int $result 审批结论 [0=审批通过; 1=审批拒接; 2=贷款取消]
-     * @param int $admin_id 后台账号ID
+     * @param int $task_id 任务ID
+     * @param int $result 结论
+     * @param int $admin_id 账号ID
      * @return array
      *  message:
      *      APPROVE_TASK_NOT_FOUND: 审批任务不存在

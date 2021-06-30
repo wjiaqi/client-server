@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * This file is part of Hyperf.
  *
@@ -14,7 +15,11 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 
-$logChannel = ['request', 'upload', 'sql'];
+$logChannel = [
+    'request',  // 请求日志
+    'upload',  // 上传日志
+    'sql'     // sql 日志
+];
 
 $result = [];
 

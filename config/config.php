@@ -14,7 +14,7 @@ use Hyperf\Contract\StdoutLoggerInterface;
 use Psr\Log\LogLevel;
 
 return [
-    'app_name' => env('APP_NAME', 'skeleton'),
+    'app_name' => env('APP_NAME', 'application-center'),
     // 生产环境使用 prod 值
     'app_env' => env('APP_ENV', 'dev'),
     // 是否使用注解扫描缓存

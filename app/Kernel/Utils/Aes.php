@@ -2,9 +2,9 @@
 
 declare (strict_types=1);
 /**
- * @copyright 深圳市乐悠悠网络科技有限公司
+ * @copyright 安巽
  * @version 1.0.0
- * @link https://dayiguo.com
+ * @link https://www.secxun.com
  */
 
 namespace App\Kernel\Utils;
@@ -12,7 +12,7 @@ namespace App\Kernel\Utils;
 /**
  * Aes
  *
- * @author 王佳其(991010625@qq.com)
+ * @author xiaoqi(991010625@qq.com)
  * @package App\Kernel\Utils
  */
 class Aes

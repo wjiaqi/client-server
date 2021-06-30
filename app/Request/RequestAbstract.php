@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 /**
- * @copyright 深圳市易果网络科技有限公司
+ * @copyright 安巽
  * @version 1.0.0
- * @link https://dayiguo.com
+ * @link https://www.secxun.com
  */
 namespace App\Request;
 
@@ -13,7 +13,7 @@ use Hyperf\Validation\Request\FormRequest;
 /**
  * 验证器基类
  *
- * @author  王佳其(991010625@qq.com)
+ * @author  xiaoqi(991010625@qq.com)
  * @package App\Controller
  */
 abstract class RequestAbstract extends FormRequest

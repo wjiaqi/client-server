@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright 深圳市易果网络科技有限公司
+ * @copyright 安巽
  * @version 1.0.0
- * @link https://dayiguo.com
+ * @link https://www.secxun.com
  */
 
 
@@ -10,6 +10,7 @@ return [
     'consumers' => value(function () {
         $consumers = [];
         $services = [
+//            'TestService' => \App\JsonRpc\Contract\TestServiceInterface::class,
         ];
         foreach ($services as $name => $interface) {
             $consumers[] = [
@@ -27,10 +28,10 @@ return [
                     'settings' => [
                         'open_eof_split' => true,
                         'package_eof' => "\r\n",
-                        // 'open_length_check' => true,
-                        // 'package_length_type' => 'N',
-                        // 'package_length_offset' => 0,
-                        // 'package_body_offset' => 4,
+                        'open_length_check' => true,
+                        'package_length_type' => 'N',
+                        'package_length_offset' => 0,
+                        'package_body_offset' => 4,
                     ],
                     'pool' => [
                         'min_connections' => 1,

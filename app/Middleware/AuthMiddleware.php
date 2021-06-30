@@ -8,6 +8,7 @@ use App\Constants\Constants;
 use App\Exception\ResponseException;
 use App\Kernel\Utils\JwtInstance;
 
+use Hyperf\HttpServer\Router\Dispatched;
 use Hyperf\Utils\Context;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -29,14 +30,13 @@ class AuthMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $dispatched = $request->getAttribute(\Hyperf\HttpServer\Router\Dispatched::class);
+        $dispatched = $request->getAttribute(Dispatched::class);
         // 跳过资源白名单
         if (in_array($dispatched->handler->route, Constants::RESOURCE_WHITE_LIST)) {
             return $handler->handle($request);
         }
         // 获取token
         $token = $request->getHeaderLine(Constants::AUTHORIZATION);
-        $channel = $request->getHeaderLine(Constants::CHANNEL_CODE);
 
         if (empty($token)) {
             throw new ResponseException('logic.NEED_LOGIN', 401);
@@ -48,8 +48,6 @@ class AuthMiddleware implements MiddlewareInterface
         if ($user->id > 0 && $user->status !== 1) {
             throw new ResponseException('logic.USER_STATUS_UNUSUAL', 401);
         }
-
-        Context::set('channelCode', $channel);
 
         return $handler->handle($request);
     }

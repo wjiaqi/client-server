@@ -35,6 +35,9 @@ return [
         'listener' => [
             'namespace' => 'App\\Listener',
         ],
+        'model' => [
+            'namespace' => 'App\\Model',
+        ],
         'middleware' => [
             'namespace' => 'App\\Middleware',
         ],

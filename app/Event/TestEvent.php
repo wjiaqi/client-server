@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 /**
- * @copyright 深圳市乐悠悠网络科技有限公司
+ * @copyright 安巽
  * @version   1.0.0
  * @link
  */
@@ -19,13 +19,12 @@ class TestEvent
     /**
      * @var int
      */
-    public $order_id;
+    public int $order_id;
 
     /**
      * TestEvent constructor.
      *
      * @param int $order_id
-     * @param int $result
      */
     public function __construct(int $order_id)
     {

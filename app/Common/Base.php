@@ -2,9 +2,9 @@
 
 declare (strict_types=1);
 /**
- * @copyright 深圳市易果网络科技有限公司
+ * @copyright 安巽
  * @version   1.0.0
- * @link      https://dayiguo.com
+ * @link      https://www.secxun.com
  */
 
 namespace App\Common;
@@ -12,9 +12,12 @@ namespace App\Common;
 use App\Exception\ResponseException;
 
 use GuzzleHttp\Client;
+use Hyperf\AsyncQueue\Driver\DriverFactory;
 use Hyperf\AsyncQueue\Driver\DriverInterface;
 use Hyperf\Cache\Listener\DeleteListenerEvent;
 use Hyperf\Di\Annotation\Inject;
+use Hyperf\Filesystem\FilesystemFactory;
+use Hyperf\Guzzle\ClientFactory;
 use Hyperf\Logger\LoggerFactory;
 use Hyperf\Redis\Redis;
 use Hyperf\Snowflake\IdGeneratorInterface;
@@ -28,7 +31,7 @@ use Psr\SimpleCache\CacheInterface;
 /**
  * 基类
  *
- * @author  王佳其(991010625@qq.com)
+ * @author  xiaoqi(991010625@qq.com)
  * @package App\Common
  */
 abstract class Base
@@ -38,31 +41,25 @@ abstract class Base
      * @Inject
      * @var ContainerInterface
      */
-    protected $container;
+    protected ContainerInterface $container;
 
     /**
      * @Inject
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @Inject()
      * @var CacheInterface
      */
-    protected $cache;
+    protected CacheInterface $cache;
 
     /**
      * @Inject()
      * @var Redis
      */
-    protected $redis;
-
-    /**
-     * @Inject()
-     * @var IdGeneratorInterface
-     */
-    protected $snowflake;
+    protected Redis $redis;
 
     /**
      * 错误响应
@@ -75,19 +72,6 @@ abstract class Base
     protected function error(string $message, int $code = 400): void
     {
         throw new ResponseException($message, $code);
-    }
-
-    /**
-     * 判断rpc返回是否正常
-     *
-     * @param array $data
-     */
-    protected function checkRpcError(array $data): void
-    {
-        if ($data['code'] === 200) {
-            return;
-        }
-        $this->error('logic.' . $data['message']);
     }
 
     /**
@@ -105,34 +89,13 @@ abstract class Base
     }
 
     /**
-     * Guzzle
+     * Guzzle客户端
      *
      * @return Client
      */
     protected function guzzle(): Client
     {
-        return $this->container->get(\Hyperf\Guzzle\ClientFactory::class)->create();
-    }
-
-    /**
-     * Redis
-     *
-     * @return Redis
-     */
-    protected function redis(): Redis
-    {
-        return di(Redis::class);
-    }
-
-
-    /**
-     * 缓存
-     *
-     * @return CacheInterface
-     */
-    protected function cache(): CacheInterface
-    {
-        return  $this->container->get(CacheInterface::class);
+        return $this->container->get(ClientFactory::class)->create();
     }
 
     /**
@@ -143,7 +106,7 @@ abstract class Base
      */
     protected function asyncQueue(string $channel = 'default'): DriverInterface
     {
-        return $this->container->get(\Hyperf\AsyncQueue\Driver\DriverFactory::class)->get($channel);
+        return $this->container->get(DriverFactory::class)->get($channel);
     }
 
     /**
@@ -154,7 +117,7 @@ abstract class Base
      */
     protected function upload(string $driver = 'oss'): Filesystem
     {
-        return $this->container->get(\Hyperf\Filesystem\FilesystemFactory::class)->get($driver);
+        return $this->container->get(FilesystemFactory::class)->get($driver);
     }
 
     /**

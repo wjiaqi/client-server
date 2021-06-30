@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright 深圳市易果网络科技有限公司
+ * @copyright 安巽
  * @version 1.0.0
- * @link https://dayiguo.com
+ * @link https://www.secxun.com
  */
 
 use Hyperf\Utils\ApplicationContext;
@@ -28,6 +28,7 @@ if (!function_exists('getConfig')) {
      * @param string $name
      * @param null $default
      * @return mixed
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     function getConfig(string $name, $default = null)
     {

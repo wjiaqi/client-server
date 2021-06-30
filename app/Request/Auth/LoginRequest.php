@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 /**
- * @copyright 深圳市易果网络科技有限公司
+ * @copyright 安巽
  * @version 1.0.0
- * @link https://dayiguo.com
+ * @link https://www.secxun.com
  */
 namespace App\Request\Auth;
 
@@ -13,7 +13,7 @@ use App\Request\RequestAbstract;
 /**
  * 登陆验证器
  *
- * @author  王佳其(991010625@qq.com)
+ * @author  xiaoqi(991010625@qq.com)
  * @package App\Controller
  */
 class LoginRequest extends RequestAbstract

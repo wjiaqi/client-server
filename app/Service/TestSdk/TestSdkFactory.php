@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 /**
- * @copyright 深圳市乐悠悠网络科技有限公司
+ * @copyright 安巽
  * @version   1.0.0
  * @link
  */
@@ -43,6 +43,7 @@ class TestSdkFactory
 
     /**
      * @return TestSdkInterface
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function getPayment(): TestSdkInterface
     {

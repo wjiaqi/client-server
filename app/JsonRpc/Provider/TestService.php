@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 /**
- * @copyright 深圳市乐悠悠网络科技有限公司
+ * @copyright 安巽
  * @version   1.0.0
  * @link
  */
@@ -21,5 +21,9 @@ use Hyperf\RpcServer\Annotation\RpcService;
  */
 class TestService extends AbstractJsonRpc implements TestServiceInterface
 {
-
+    // 检测服务
+    public function check(int $id, int $num): int
+    {
+        return $num + $id;
+    }
 }

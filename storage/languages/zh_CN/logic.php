@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright 深圳市易果网络科技有限公司
+ * @copyright 安巽
  * @version 1.0.0
- * @link https://dayiguo.com
+ * @link https://www.secxun.com
  */
 return [
     'SERVER_ERROR' => '服务器繁忙',

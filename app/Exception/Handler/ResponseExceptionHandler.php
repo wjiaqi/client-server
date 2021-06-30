@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 /**
- * @copyright 深圳市易果网络科技有限公司
+ * @copyright 安巽
  * @version 1.0.0
- * @link https://dayiguo.com
+ * @link https://www.secxun.com
  */
 
 namespace App\Exception\Handler;
@@ -21,12 +21,12 @@ use Throwable;
 /**
  * 逻辑异常接管
  *
- * @author  王佳其(991010625@qq.com)
+ * @author  xiaoqi(991010625@qq.com)
  * @package App\Model
  */
 class ResponseExceptionHandler extends ExceptionHandler
 {
-    public function handle(Throwable $throwable, ResponseInterface $response)
+    public function handle(Throwable $throwable, ResponseInterface $response): ResponseInterface
     {
         $data = [
             'code' => $throwable->getCode(),
@@ -43,11 +43,7 @@ class ResponseExceptionHandler extends ExceptionHandler
         $response = $response->withStatus(200)
             ->withBody(new SwooleStream($data))
             ->withHeader('Content-Type', 'application/json;charset=utf-8')
-            ->withHeader('Server', 'xiaoqi')
-            ->withHeader('Author', 'xiaoqi')
-            ->withHeader('Email', '99101025@qq.com')
-            ->withHeader('Wechat', 'wjq72394')
-            ->withHeader('Phone', '+8613750249057');
+            ->withHeader('Author', 'anxun');
 
         // 交换token
         if (Context::has('ExchangeToken')) {

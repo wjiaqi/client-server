@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 /**
- * @copyright 深圳市乐悠悠网络科技有限公司
+ * @copyright 安巽
  * @version   1.0.0
  * @link
  */
@@ -23,7 +23,7 @@ abstract class AbstractListener
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    protected ContainerInterface $container;
 
     /**
      * AbstractListener constructor.
